@@ -2,7 +2,8 @@
 
 Запуск:
 ```bash
-ansible-playbook -i inventory playbook.yml```
+ansible-playbook -i inventory playbook.yml
+```
 
 В плейбук можно внести изменения (вынесены в переменные):
 | Variable                          | Description                                                                                           |
