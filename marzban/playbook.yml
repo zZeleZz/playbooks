@@ -1,0 +1,12 @@
+---
+- name: Install Marzban on Ubuntu
+  hosts: all
+  become: true
+  vars:
+    - ROOT_DIR: "/opt/marzban"
+    - SUDO_USERNAME: "admin"
+    - SUDO_PASSWORD: "admin"
+  roles:
+    - docker
+    - app
+

@@ -1,0 +1,51 @@
+---
+- name: Exists marzban
+  stat:
+    path: "{{ ROOT_DIR }}/docker-compose.yml"
+  register: marzban_status
+
+- name: Copy script marzban.sh
+  copy:
+    src: marzban.sh
+    dest: ~/marzban.sh
+    mode: '755'
+  when: not marzban_status.stat.exists
+
+- name: Run script install Marzban
+  shell: '~/marzban.sh install'
+  when: not marzban_status.stat.exists
+
+- name: Генерация .env из шаблона
+  template:
+    src: env.j2
+    dest: "{{ ROOT_DIR }}/.env"
+
+- name: Exists subscribe template
+  stat:
+    path: "{{ ROOT_DIR }}/index.html"
+  register: index_status
+
+- name: Download subscribe template
+  get_url:
+    url: https://raw.githubusercontent.com/MuhammadAshouri/marzban-templates/master/template-01/index.html
+    dest: "{{ ROOT_DIR }}/index.html"
+  register: download_template
+
+- name: Add subscribe template
+  lineinfile:
+    path: "{{ ROOT_DIR }}/docker-compose.yml"
+    line: "      - /opt/marzban/index.html:/code/app/templates/subscription/index.html"
+  when: download_template.changed
+
+- name: Stop docker-compose
+  docker_compose:
+    project_src: "{{ ROOT_DIR }}/"
+    state: absent
+  when: download_template.changed
+
+- name: Start docker-compose
+  docker_compose: 
+    project_src: "{{ ROOT_DIR }}/"
+    state: present
+ 
+  
