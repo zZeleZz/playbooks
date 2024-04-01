@@ -16,3 +16,10 @@ ansible-playbook -i inventory playbook.yml
 - ROOT_DIR: "/opt/marzban"
 - SUDO_USERNAME: "admin"
 - SUDO_PASSWORD: "admin"
+
+### Главное меню
+![image](https://github.com/zZeleZz/playbooks/assets/99475797/8d3fb1f0-a14a-4b3e-89ec-5029cae5e400)
+
+### Страница подписки
+![image](https://github.com/zZeleZz/playbooks/assets/99475797/61d1fcdb-d333-450a-968a-85c31b78b22c)
+
